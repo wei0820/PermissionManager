@@ -31,6 +31,8 @@ public class CheckDeviceManagr {
     private static final String KEY_MIUI_VERSION_CODE = "ro.miui.ui.version.code";
     private static final String KEY_MIUI_VERSION_NAME = "ro.miui.ui.version.name";
     private static final String KEY_MIUI_INTERNAL_STORAGE = "ro.miui.internal.storage";
+
+    private static  final  int VERSIONSDKINT = 23;
     //系统授权设置的弹框
     public  static  AlertDialog openAppDetDialog = null;
     public  static AlertDialog openMiuiAppDetDialog = null;
@@ -80,7 +82,7 @@ public class CheckDeviceManagr {
 
     public void restartCheck(Context context,final Class<?> cls){
         //从系统的设置界面设置完返回app的时候，需要重新检测一下权限
-        if (Build.VERSION.SDK_INT < 23) {
+        if (Build.VERSION.SDK_INT < VERSIONSDKINT) {
             //跳转主页
             goToActivity(context,cls);
         } else if (!isAllGranted(context)) {
