@@ -15,6 +15,7 @@ import android.os.Environment;
 import android.provider.Settings;
 import android.widget.Toast;
 
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import java.io.File;
@@ -23,6 +24,8 @@ import java.io.IOException;
 import java.util.Properties;
 
 public class CheckDeviceManagr {
+    private static final int MY_PERMISSION_REQUEST_CODE = 10000;
+
     //检测MIUI
     private static final String KEY_MIUI_VERSION_CODE = "ro.miui.ui.version.code";
     private static final String KEY_MIUI_VERSION_NAME = "ro.miui.ui.version.name";
@@ -31,7 +34,42 @@ public class CheckDeviceManagr {
     public  static  AlertDialog openAppDetDialog = null;
     public  static AlertDialog openMiuiAppDetDialog = null;
 
+    public void initPermission(Context context) {
+//        判断是否是6.0以上的系统
+        if (Build.VERSION.SDK_INT >= 23) {
+            //
+            if (isAllGranted(context)) {
+                if (checkIsMIUI(context)) {
+                    if (!initMiuiPermission(context)) {
+                        openMiuiAppDetails(context);
+                        return;
+                    }
+                }
+                gotoHomeActivity();
+                return;
+            } else {
 
+                /**
+                 * 第 2 步: 请求权限
+                 */
+                // 一次请求多个权限, 如果其他有权限是已经授予的将会自动忽略掉
+                ActivityCompat.requestPermissions(
+                        this,
+                        new String[]{
+                                Manifest.permission.READ_PHONE_STATE,
+                                Manifest.permission.ACCESS_COARSE_LOCATION,
+                                Manifest.permission.ACCESS_FINE_LOCATION,
+                                Manifest.permission.CAMERA,
+                                Manifest.permission.READ_EXTERNAL_STORAGE,
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE
+                        },
+                        MY_PERMISSION_REQUEST_CODE
+                );
+            }
+        } else {
+            gotoHomeActivity();
+        }
+    }
     /**
      * 打开 APP 的详情设置
      */
@@ -150,7 +188,6 @@ public class CheckDeviceManagr {
                         Manifest.permission.WRITE_EXTERNAL_STORAGE
                 }
         );
-
         return isAllGranted;
     }
 
