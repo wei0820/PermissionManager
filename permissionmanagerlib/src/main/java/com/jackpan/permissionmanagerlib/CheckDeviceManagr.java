@@ -70,6 +70,22 @@ public class CheckDeviceManagr {
             gotoHomeActivity();
         }
     }
+
+    public void restartCheck(Context context){
+        //从系统的设置界面设置完返回app的时候，需要重新检测一下权限
+        if (Build.VERSION.SDK_INT < 23) {
+            gotoHomeActivity();
+        } else if (!isAllGranted(context)) {
+            //判断基本的应用权限
+            openAppDetails(context);
+        } else if (!initMiuiPermission(context)) {
+            //如果基础的应用权限已经授取；切是小米系统，校验小米的授权管理页面的权限
+            openMiuiAppDetails(context);
+        } else {
+            //都没有问题了，跳转主页
+            gotoHomeActivity();
+        }
+    }
     /**
      * 打开 APP 的详情设置
      */
