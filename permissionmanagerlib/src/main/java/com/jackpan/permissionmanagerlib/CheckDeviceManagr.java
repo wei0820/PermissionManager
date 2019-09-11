@@ -13,6 +13,7 @@ import android.os.Binder;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.Settings;
+import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 
@@ -93,11 +94,15 @@ public class CheckDeviceManagr {
      * @return
      */
 
-    public boolean isMIUI() {
+    private  void  setToast(Context context,String s){
+        Toast.makeText(context,s,Toast.LENGTH_SHORT).show();
+    }
+
+    public boolean checkIsMIUI(Context context) {
         String device = Build.MANUFACTURER;
         System.out.println("Build.MANUFACTURER = " + device);
         if (device.equals("Xiaomi")) {
-            System.out.println("this is a xiaomi device");
+            setToast(context,"this is a xiaomi device");
             Properties prop = new Properties();
             try {
                 prop.load(new FileInputStream(new File(Environment.getRootDirectory(), "build.prop")));
