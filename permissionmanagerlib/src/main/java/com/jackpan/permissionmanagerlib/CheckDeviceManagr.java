@@ -12,13 +12,10 @@ import android.net.Uri;
 import android.os.Binder;
 import android.os.Build;
 import android.os.Environment;
-import android.os.Handler;
 import android.provider.Settings;
 import android.widget.Toast;
-
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -156,11 +153,6 @@ public class CheckDeviceManagr {
      *
      * @return
      */
-
-    private  void  setToast(Context context,String s){
-        Toast.makeText(context,s,Toast.LENGTH_SHORT).show();
-    }
-
     public boolean checkIsMIUI(Context context) {
         String device = Build.MANUFACTURER;
         System.out.println("Build.MANUFACTURER = " + device);
@@ -199,7 +191,7 @@ public class CheckDeviceManagr {
      *
      * @return true 所需权限全部授取  false 存在未授权的权限
      */
-    public boolean isAllGranted(Context context) {
+    private boolean isAllGranted(Context context) {
         /**
          * 第 1 步: 检查是否有相应的权限
          */
@@ -221,7 +213,7 @@ public class CheckDeviceManagr {
      *
      * @return false 存在核心的未收取的权限   true 核心权限已经全部授权
      */
-    public boolean initMiuiPermission(Context context) {
+    private boolean initMiuiPermission(Context context) {
         AppOpsManager appOpsManager = (AppOpsManager) context.getSystemService(Context.APP_OPS_SERVICE);
         int locationOp = appOpsManager.checkOp(AppOpsManager.OPSTR_FINE_LOCATION, Binder.getCallingUid(), context.getPackageName());
         if (locationOp == AppOpsManager.MODE_IGNORED) {
@@ -248,6 +240,12 @@ public class CheckDeviceManagr {
             return false;
         }
         return true;
+    }
+    /**
+        設定 Toast
+     */
+    private  void  setToast(Context context,String s){
+        Toast.makeText(context,s,Toast.LENGTH_SHORT).show();
     }
 }
 
