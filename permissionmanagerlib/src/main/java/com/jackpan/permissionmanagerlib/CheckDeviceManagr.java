@@ -1,4 +1,4 @@
-package com.jackpan.permissionmanager;
+package com.jackpan.permissionmanagerlib;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -15,12 +15,13 @@ public class CheckDeviceManagr {
     private static final String KEY_MIUI_INTERNAL_STORAGE = "ro.miui.internal.storage";
     //系统授权设置的弹框
     AlertDialog openAppDetDialog = null;
+    AlertDialog openMiuiAppDetDialog = null;
 
 
     /**
      * 打开 APP 的详情设置
      */
-    private void openAppDetails(final Context context) {
+    public void openAppDetails(final Context context) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setMessage(context.getString(R.string.app_name) + "需要访问 \"设备信息\"、\"相册\"、\"定位\" 和 \"外部存储器\",请到 \"应用信息 -> 权限\" 中授予！");
         builder.setPositiveButton("手动授权", new DialogInterface.OnClickListener() {
@@ -47,6 +48,30 @@ public class CheckDeviceManagr {
             openAppDetDialog = builder.create();
         if (null != openAppDetDialog && !openAppDetDialog.isShowing())
             openAppDetDialog.show();
+    }
+    /**
+     * 打开 APP 的详情设置
+     */
+    private void openMiuiAppDetails(final  Context context) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage(context.getString(R.string.app_name) + "需要访问 \"设备信息\"、\"相册\"、\"定位\" 和 \"外部存储器\",请到 \"应用信息 -> 权限\" 中授予！");
+        builder.setPositiveButton("手动授权", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                JumpPermissionManagement.GoToSetting((Activity) context);
+            }
+        });
+        builder.setCancelable(false);
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                ((Activity)context).finish();
+            }
+        });
+        if (null == openMiuiAppDetDialog)
+            openMiuiAppDetDialog = builder.create();
+        if (null != openMiuiAppDetDialog && !openMiuiAppDetDialog.isShowing())
+            openMiuiAppDetDialog.show();
     }
 
 }
