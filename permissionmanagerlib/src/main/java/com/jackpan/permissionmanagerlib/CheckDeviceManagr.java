@@ -45,7 +45,6 @@ public class CheckDeviceManagr {
                         return;
                     }
                 }
-                gotoHomeActivity();
                 return;
             } else {
 
@@ -67,7 +66,7 @@ public class CheckDeviceManagr {
                 );
             }
         } else {
-            gotoHomeActivity();
+
         }
     }
 
