@@ -74,7 +74,7 @@ public class CheckDeviceManagr {
     public void restartCheck(Context context){
         //从系统的设置界面设置完返回app的时候，需要重新检测一下权限
         if (Build.VERSION.SDK_INT < 23) {
-            gotoHomeActivity();
+            //跳转主页
         } else if (!isAllGranted(context)) {
             //判断基本的应用权限
             openAppDetails(context);
@@ -83,7 +83,7 @@ public class CheckDeviceManagr {
             openMiuiAppDetails(context);
         } else {
             //都没有问题了，跳转主页
-            gotoHomeActivity();
+
         }
     }
     /**
