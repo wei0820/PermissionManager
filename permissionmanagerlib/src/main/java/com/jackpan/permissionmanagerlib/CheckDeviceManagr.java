@@ -48,7 +48,7 @@ public class CheckDeviceManagr {
         };
     }
 
-    public void initPermission(Context context) {
+    public void isCheckVersion(Context context) {
 //        判断是否是6.0以上的系统
         if (Build.VERSION.SDK_INT >= 23) {
             //
