@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Binder;
 import android.os.Build;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.Settings;
 import android.widget.Toast;
 
@@ -33,6 +34,19 @@ public class CheckDeviceManagr {
     //系统授权设置的弹框
     public  static  AlertDialog openAppDetDialog = null;
     public  static AlertDialog openMiuiAppDetDialog = null;
+    Handler handler = new Handler();
+    Runnable runnable ;
+
+    public  void restartActivity(final  Context packageContext, final  Class<?> cls){
+        runnable   = new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(packageContext, cls);
+                packageContext.startActivity(intent);
+                ((Activity)packageContext).finish();
+            }
+        };
+    }
 
     public void initPermission(Context context) {
 //        判断是否是6.0以上的系统
