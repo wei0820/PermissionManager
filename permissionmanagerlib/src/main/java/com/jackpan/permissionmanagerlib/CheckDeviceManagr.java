@@ -31,8 +31,8 @@ public class CheckDeviceManagr {
 
     private static  final  int VERSIONSDKINT = 23;
     //系统授权设置的弹框
-    public  static  AlertDialog openAppDetDialog = null;
-    public  static AlertDialog openMiuiAppDetDialog = null;
+    public   AlertDialog openAppDetDialog = null;
+    public   AlertDialog openMiuiAppDetDialog = null;
 
     public  void goToActivity(final  Context packageContext, final  Class<?> cls){
         Intent intent = new Intent(packageContext, cls);
@@ -55,8 +55,7 @@ public class CheckDeviceManagr {
                 return;
             } else {
                 /**
-                 * 第 2 步: 请求权限
-                 */
+                 * 第 2 步: 请求权限*/
                 // 一次请求多个权限, 如果其他有权限是已经授予的将会自动忽略掉
                 ActivityCompat.requestPermissions(
                         ((Activity)context),
