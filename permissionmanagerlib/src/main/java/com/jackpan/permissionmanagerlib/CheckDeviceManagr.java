@@ -23,7 +23,6 @@ import java.util.Properties;
 
 public class CheckDeviceManagr {
     private static final int MY_PERMISSION_REQUEST_CODE = 10000;
-
     //检测MIUI
     private static final String KEY_MIUI_VERSION_CODE = "ro.miui.ui.version.code";
     private static final String KEY_MIUI_VERSION_NAME = "ro.miui.ui.version.name";
