@@ -34,21 +34,14 @@ public class CheckDeviceManagr {
     //系统授权设置的弹框
     public  static  AlertDialog openAppDetDialog = null;
     public  static AlertDialog openMiuiAppDetDialog = null;
-    Handler handler = new Handler();
-    Runnable runnable ;
 
-    public  void restartActivity(final  Context packageContext, final  Class<?> cls){
-        runnable   = new Runnable() {
-            @Override
-            public void run() {
-                Intent intent = new Intent(packageContext, cls);
-                packageContext.startActivity(intent);
-                ((Activity)packageContext).finish();
-            }
-        };
+    public  void goToActivity(final  Context packageContext, final  Class<?> cls){
+        Intent intent = new Intent(packageContext, cls);
+        packageContext.startActivity(intent);
+        ((Activity)packageContext).finish();
     }
 
-    public void isCheckVersion(Context context) {
+    public void isCheckVersion(Context context,final  Class<?> cls) {
 //        判断是否是6.0以上的系统
         if (Build.VERSION.SDK_INT >= 23) {
             //
@@ -59,6 +52,7 @@ public class CheckDeviceManagr {
                         return;
                     }
                 }
+                goToActivity(context,cls);
                 return;
             } else {
 
@@ -80,14 +74,15 @@ public class CheckDeviceManagr {
                 );
             }
         } else {
-
+            goToActivity(context,cls);
         }
     }
 
-    public void restartCheck(Context context){
+    public void restartCheck(Context context,final Class<?> cls){
         //从系统的设置界面设置完返回app的时候，需要重新检测一下权限
         if (Build.VERSION.SDK_INT < 23) {
             //跳转主页
+            goToActivity(context,cls);
         } else if (!isAllGranted(context)) {
             //判断基本的应用权限
             openAppDetails(context);
@@ -96,7 +91,7 @@ public class CheckDeviceManagr {
             openMiuiAppDetails(context);
         } else {
             //都没有问题了，跳转主页
-
+            goToActivity(context,cls);
         }
     }
     /**
