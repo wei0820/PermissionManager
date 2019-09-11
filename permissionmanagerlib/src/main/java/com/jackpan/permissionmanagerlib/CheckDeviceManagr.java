@@ -8,7 +8,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Binder;
+import android.os.Build;
+import android.os.Environment;
 import android.provider.Settings;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
 
 public class CheckDeviceManagr {
     //检测MIUI
@@ -75,6 +82,33 @@ public class CheckDeviceManagr {
         if (null != openMiuiAppDetDialog && !openMiuiAppDetDialog.isShowing())
             openMiuiAppDetDialog.show();
     }
+
+    /**
+     * 检查手机是否是miui系统
+     *
+     * @return
+     */
+
+    public boolean isMIUI() {
+        String device = Build.MANUFACTURER;
+        System.out.println("Build.MANUFACTURER = " + device);
+        if (device.equals("Xiaomi")) {
+            System.out.println("this is a xiaomi device");
+            Properties prop = new Properties();
+            try {
+                prop.load(new FileInputStream(new File(Environment.getRootDirectory(), "build.prop")));
+            } catch (IOException e) {
+                e.printStackTrace();
+                return false;
+            }
+            return prop.getProperty(KEY_MIUI_VERSION_CODE, null) != null
+                    || prop.getProperty(KEY_MIUI_VERSION_NAME, null) != null
+                    || prop.getProperty(KEY_MIUI_INTERNAL_STORAGE, null) != null;
+        } else {
+            return false;
+        }
+    }
+
     /**
      * 判断小米MIUI系统中授权管理中对应的权限授取
      *
@@ -109,4 +143,4 @@ public class CheckDeviceManagr {
         return true;
     }
 }
-}
+
