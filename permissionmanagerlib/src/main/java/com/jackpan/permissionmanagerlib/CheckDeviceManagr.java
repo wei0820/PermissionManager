@@ -2,10 +2,12 @@ package com.jackpan.permissionmanagerlib;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.AppOpsManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Binder;
 import android.provider.Settings;
 
 public class CheckDeviceManagr {
@@ -73,5 +75,38 @@ public class CheckDeviceManagr {
         if (null != openMiuiAppDetDialog && !openMiuiAppDetDialog.isShowing())
             openMiuiAppDetDialog.show();
     }
+    /**
+     * 判断小米MIUI系统中授权管理中对应的权限授取
+     *
+     * @return false 存在核心的未收取的权限   true 核心权限已经全部授权
+     */
+    public boolean initMiuiPermission(Context context) {
+        AppOpsManager appOpsManager = (AppOpsManager) context.getSystemService(Context.APP_OPS_SERVICE);
+        int locationOp = appOpsManager.checkOp(AppOpsManager.OPSTR_FINE_LOCATION, Binder.getCallingUid(), context.getPackageName());
+        if (locationOp == AppOpsManager.MODE_IGNORED) {
+            return false;
+        }
 
+        int cameraOp = appOpsManager.checkOp(AppOpsManager.OPSTR_CAMERA, Binder.getCallingUid(), context.getPackageName());
+        if (cameraOp == AppOpsManager.MODE_IGNORED) {
+            return false;
+        }
+
+        int phoneStateOp = appOpsManager.checkOp(AppOpsManager.OPSTR_READ_PHONE_STATE, Binder.getCallingUid(), context.getPackageName());
+        if (phoneStateOp == AppOpsManager.MODE_IGNORED) {
+            return false;
+        }
+
+        int readSDOp = appOpsManager.checkOp(AppOpsManager.OPSTR_READ_EXTERNAL_STORAGE, Binder.getCallingUid(), context.getPackageName());
+        if (readSDOp == AppOpsManager.MODE_IGNORED) {
+            return false;
+        }
+
+        int writeSDOp = appOpsManager.checkOp(AppOpsManager.OPSTR_WRITE_EXTERNAL_STORAGE, Binder.getCallingUid(), context.getPackageName());
+        if (writeSDOp == AppOpsManager.MODE_IGNORED) {
+            return false;
+        }
+        return true;
+    }
+}
 }
