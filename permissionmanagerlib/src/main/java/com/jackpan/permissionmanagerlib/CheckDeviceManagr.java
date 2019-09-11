@@ -45,7 +45,7 @@ public class CheckDeviceManagr {
 
     public void isCheckVersion(Context context,final  Class<?> cls) {
 //        判断是否是6.0以上的系统
-        if (Build.VERSION.SDK_INT >= 23) {
+        if (Build.VERSION.SDK_INT >= VERSIONSDKINT) {
             //
             if (isAllGranted(context)) {
                 if (checkIsMIUI(context)) {
@@ -57,7 +57,6 @@ public class CheckDeviceManagr {
                 goToActivity(context,cls);
                 return;
             } else {
-
                 /**
                  * 第 2 步: 请求权限
                  */
