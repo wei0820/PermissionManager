@@ -98,7 +98,7 @@ public class CheckDeviceManagr {
     /**
      * 打开 APP 的详情设置
      */
-    public static  void openAppDetails(final Context context) {
+    private   void openAppDetails(final Context context) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setMessage(context.getString(R.string.app_name) + "需要访问 \"设备信息\"、\"相册\"、\"定位\" 和 \"外部存储器\",请到 \"应用信息 -> 权限\" 中授予！");
         builder.setPositiveButton("手动授权", new DialogInterface.OnClickListener() {
@@ -129,7 +129,7 @@ public class CheckDeviceManagr {
     /**
      * 打开 APP 的详情设置
      */
-    private static  void openMiuiAppDetails(final  Context context) {
+    private   void openMiuiAppDetails(final  Context context) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setMessage(context.getString(R.string.app_name) + "需要访问 \"设备信息\"、\"相册\"、\"定位\" 和 \"外部存储器\",请到 \"应用信息 -> 权限\" 中授予！");
         builder.setPositiveButton("手动授权", new DialogInterface.OnClickListener() {
